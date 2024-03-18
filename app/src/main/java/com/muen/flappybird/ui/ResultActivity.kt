@@ -4,6 +4,7 @@ import android.content.Intent
 import com.muen.flappybird.MainActivity
 import com.muen.flappybird.databinding.ActivityResultBinding
 import com.muen.flappybird.util.BaseActivity
+import com.muen.flappybird.util.MMKVManager
 
 class ResultActivity : BaseActivity<ActivityResultBinding>() {
     override fun onCreateViewBinding(): ActivityResultBinding {
@@ -31,20 +32,16 @@ class ResultActivity : BaseActivity<ActivityResultBinding>() {
 
 
     private fun getScore(){
-        val sp = getSharedPreferences("sonuc", MODE_PRIVATE)
-        val enYuksekSkor = sp.getInt("EnyuksekSkor",0)
+        val bestScore = MMKVManager.bestScore
+        val nowScore = intent.getIntExtra("score",0)
+        viewBinding.score.text = nowScore.toString()
 
-        val gelenSkor = intent.getIntExtra("skor",0)
-        viewBinding.score.text = gelenSkor.toString()
-
-        if (gelenSkor > enYuksekSkor){
-            val editor = sp.edit()
-            editor.putInt("EnyuksekSkor",gelenSkor)
-            editor.commit()
-            viewBinding.bestScore.text = gelenSkor.toString()
+        if (nowScore > bestScore){
+            MMKVManager.bestScore = nowScore
+            viewBinding.bestScore.text = nowScore.toString()
         }
         else{
-            viewBinding.bestScore.text = enYuksekSkor.toString()
+            viewBinding.bestScore.text = bestScore.toString()
         }
 
     }

@@ -1,13 +1,12 @@
 package com.muen.flappybird
 
 import android.content.Intent
-import android.media.MediaPlayer
 import com.muen.flappybird.databinding.ActivityMainBinding
 import com.muen.flappybird.ui.GameActivity
 import com.muen.flappybird.util.BaseActivity
+import com.muen.flappybird.util.MMKVManager
 
 class MainActivity : BaseActivity<ActivityMainBinding>() {
-    private var muzukcalar = MediaPlayer()
 
     override fun onCreateViewBinding(): ActivityMainBinding {
         return ActivityMainBinding.inflate(layoutInflater)
@@ -27,9 +26,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
 
     private fun getBestScore(){
-        val sp = getSharedPreferences("sonuc", MODE_PRIVATE)
-        val enYuksekSkor = sp.getInt("EnyuksekSkor",0)
-        viewBinding.score.text = enYuksekSkor.toString()
+        viewBinding.bestScore.text = MMKVManager.bestScore.toString()
     }
 
     override fun onBackPressed() {

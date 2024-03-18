@@ -218,7 +218,7 @@ class GameActivity : BaseActivity<ActivityGameBinding>() {
             mediaPlayer = MediaPlayer.create(this, R.raw.carpma)
             mediaPlayer.start()
             val intent = Intent(this@GameActivity, ResultActivity::class.java)
-            intent.putExtra("skor",score)
+            intent.putExtra("score",score)
             startActivity(intent)
             finish()
         }

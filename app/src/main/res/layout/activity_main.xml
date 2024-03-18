@@ -57,7 +57,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/best_score"
+        android:id="@+id/txt_best_score"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="历史最高分"
@@ -69,7 +69,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/score"
+        android:id="@+id/best_score"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="25dp"
@@ -78,6 +78,6 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/best_score" />
+        app:layout_constraintTop_toBottomOf="@+id/txt_best_score" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
