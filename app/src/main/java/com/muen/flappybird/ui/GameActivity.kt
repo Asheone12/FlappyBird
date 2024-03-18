@@ -174,41 +174,36 @@ class GameActivity : BaseActivity<ActivityGameBinding>() {
     }
 
     private fun collide(){
-        var bSagUx = viewBinding.bird.x+birdWidth
-        var bSagUy = viewBinding.bird.y
-        var bSolUx = viewBinding.bird.x
-        var bSolUy = viewBinding.bird.y
+        val birdStartX = viewBinding.bird.x
+        val birdStartY = viewBinding.bird.y
+        val birdEndX = viewBinding.bird.x+birdWidth
+        val birdEndY = viewBinding.bird.y + birdHeight
 
-        var bSagAx = viewBinding.bird.x+birdWidth
-        var bSagAy = viewBinding.bird.y + birdHeight
-        var bSolAx = viewBinding.bird.x
-        var bSolAy = viewBinding.bird.y + birdHeight
-
-        var pipe1Midpoint = viewBinding.pipeTop1.x + viewBinding.pipeTop1.width/2
-        var pipe2Midpoint = viewBinding.pipeTop2.x + viewBinding.pipeTop2.width/2
-        var birdMidpoint = viewBinding.bird.x + viewBinding.bird.width/2
+        val pipe1Midpoint = viewBinding.pipeTop1.x + viewBinding.pipeTop1.width/2
+        val pipe2Midpoint = viewBinding.pipeTop2.x + viewBinding.pipeTop2.width/2
+        val birdMidpoint = viewBinding.bird.x + viewBinding.bird.width/2
 
 
 
-        if (bSagUy >= viewBinding.pipeTop1.y && bSagUy <= viewBinding.pipeTop1.y + pipeTopHeight &&
-            bSolUy >= viewBinding.pipeTop1.y && bSolUy <= viewBinding.pipeTop1.y + pipeTopHeight &&
-            bSagUx >= viewBinding.pipeTop1.x && bSagUx <= viewBinding.pipeTop1.x + pipeTopWidth &&
-            bSolUx >= viewBinding.pipeTop1.x && bSolUx <= viewBinding.pipeTop1.x + pipeTopWidth
+        if (birdStartY >= viewBinding.pipeTop1.y && birdStartY <= viewBinding.pipeTop1.y + pipeTopHeight &&
+            birdStartY >= viewBinding.pipeTop1.y && birdStartY <= viewBinding.pipeTop1.y + pipeTopHeight &&
+            birdEndX >= viewBinding.pipeTop1.x && birdEndX <= viewBinding.pipeTop1.x + pipeTopWidth &&
+            birdStartX >= viewBinding.pipeTop1.x && birdStartX <= viewBinding.pipeTop1.x + pipeTopWidth
             ||
-            bSagUy >= viewBinding.pipeTop2.y && bSagUy <= viewBinding.pipeTop2.y + pipeTopHeight &&
-            bSolUy >= viewBinding.pipeTop2.y && bSolUy <= viewBinding.pipeTop2.y + pipeTopHeight &&
-            bSagUx >= viewBinding.pipeTop2.x && bSagUx <= viewBinding.pipeTop2.x + pipeTopWidth &&
-            bSolUx >= viewBinding.pipeTop2.x && bSolUx <= viewBinding.pipeTop2.x + pipeTopWidth
+            birdStartY >= viewBinding.pipeTop2.y && birdStartY <= viewBinding.pipeTop2.y + pipeTopHeight &&
+            birdStartY >= viewBinding.pipeTop2.y && birdStartY <= viewBinding.pipeTop2.y + pipeTopHeight &&
+            birdEndX >= viewBinding.pipeTop2.x && birdEndX <= viewBinding.pipeTop2.x + pipeTopWidth &&
+            birdStartX >= viewBinding.pipeTop2.x && birdStartX <= viewBinding.pipeTop2.x + pipeTopWidth
             ||
-            bSagAy >= viewBinding.pipeBottom1.y && bSagAy <= viewBinding.pipeBottom1.y + pipeTopHeight &&
-            bSolAy >= viewBinding.pipeBottom1.y && bSolAy <= viewBinding.pipeBottom1.y + pipeTopHeight &&
-            bSagAx >= viewBinding.pipeBottom1.x && bSagAx <= viewBinding.pipeBottom1.x + pipeTopWidth &&
-            bSolAx >= viewBinding.pipeBottom1.x && bSolAx <= viewBinding.pipeBottom1.x + pipeTopWidth
+            birdEndY >= viewBinding.pipeBottom1.y && birdEndY <= viewBinding.pipeBottom1.y + pipeTopHeight &&
+            birdEndY >= viewBinding.pipeBottom1.y && birdEndY <= viewBinding.pipeBottom1.y + pipeTopHeight &&
+            birdEndX >= viewBinding.pipeBottom1.x && birdEndX <= viewBinding.pipeBottom1.x + pipeTopWidth &&
+            birdStartX >= viewBinding.pipeBottom1.x && birdStartX <= viewBinding.pipeBottom1.x + pipeTopWidth
             ||
-            bSagAy >= viewBinding.pipeBottom2.y && bSagAy <= viewBinding.pipeBottom2.y + pipeTopHeight &&
-            bSolAy >= viewBinding.pipeBottom2.y && bSolAy <= viewBinding.pipeBottom2.y + pipeTopHeight &&
-            bSagAx >= viewBinding.pipeBottom2.x && bSagAx <= viewBinding.pipeBottom2.x + pipeTopWidth &&
-            bSolAx >= viewBinding.pipeBottom2.x && bSolAx <= viewBinding.pipeBottom2.x + pipeTopWidth){
+            birdEndY >= viewBinding.pipeBottom2.y && birdEndY <= viewBinding.pipeBottom2.y + pipeTopHeight &&
+            birdEndY >= viewBinding.pipeBottom2.y && birdEndY <= viewBinding.pipeBottom2.y + pipeTopHeight &&
+            birdEndX >= viewBinding.pipeBottom2.x && birdEndX <= viewBinding.pipeBottom2.x + pipeTopWidth &&
+            birdStartX >= viewBinding.pipeBottom2.x && birdStartX <= viewBinding.pipeBottom2.x + pipeTopWidth){
 
             timer.cancel()
             mediaPlayer = MediaPlayer.create(this, R.raw.carpma)
