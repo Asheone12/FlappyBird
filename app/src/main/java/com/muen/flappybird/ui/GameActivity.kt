@@ -14,7 +14,7 @@ import java.util.Timer
 import kotlin.concurrent.schedule
 
 class GameActivity : BaseActivity<ActivityGameBinding>() {
-    //pozisyonlar
+    //位置
     private var birdX= 0.0f
     private var birdY= 0.0f
     private var pipeUstX = 0.0f
@@ -26,23 +26,23 @@ class GameActivity : BaseActivity<ActivityGameBinding>() {
     private var pipe2AltX = 0.0f
     private var pipe2AltY = 0.0f
 
-    //kontroller
-    private var dokunmaKontrol = false
-    private var baslangicKontrol = false
-    var pipe1PuanKontrol = true
-    var pipe2PuanKontrol = true
+    //控制器
+    private var touchControl = false
+    private var startControl = false
+    var pipe1PuanControl = true
+    var pipe2PuanControl = true
 
-    //durumlar
-    private var ekranGenisligi = 0
-    private var ekranYuksekligi = 0
-    private var birdGenisligi = 0
-    private var birdYuksekligi = 0
-    private var pipeUstYukseklik = 0
-    private var pipeUstGenislik = 0
+    //屏幕参数
+    private var screenWidth = 0
+    private var screenHeight = 0
+    private var birdWidth = 0
+    private var birdHeight = 0
+    private var pipeTopWidth = 0
+    private var pipeTopHeight = 0
 
     private val timer = Timer()
-    private var skor = 0
-    private var muzukcalar = MediaPlayer()
+    private var score = 0
+    private var mediaPlayer = MediaPlayer()
 
     override fun onCreateViewBinding(): ActivityGameBinding {
         return ActivityGameBinding.inflate(layoutInflater)
@@ -54,24 +54,24 @@ class GameActivity : BaseActivity<ActivityGameBinding>() {
         viewBinding.cl.setOnTouchListener(object : View.OnTouchListener{
             override fun onTouch(v: View?, event: MotionEvent?): Boolean {
 
-                if (baslangicKontrol){
+                if (startControl){
                     if(event?.action == MotionEvent.ACTION_DOWN){
-                        birdUcmaAnimasyonu()
-                        dokunmaKontrol = true
+                        birdFlyAnimator()
+                        touchControl = true
                     }
                     if (event?.action == MotionEvent.ACTION_UP){
-                        dokunmaKontrol = false
+                        touchControl = false
                     }
                 } else{
-                    baslangicKontrol = true
-                    baslangicYaziSilme()
-                    konumVeBoyutBilgileri()
+                    startControl = true
+                    removeTips()
+                    updateLocation()
 
                     timer.schedule(0,30){
                         Handler(Looper.getMainLooper()).post{
-                            birdHareketi()
-                            pipeHareketi()
-                            carpismaTesit()
+                            birdMove()
+                            pipeMove()
+                            collide()
                         }
                     }
                 }
@@ -82,37 +82,37 @@ class GameActivity : BaseActivity<ActivityGameBinding>() {
         })
     }
 
-    fun birdHareketi(){
-        if (dokunmaKontrol){
-            dokunmaKontrol=false
-            birdY-=birdYuksekligi+birdYuksekligi/5
+    fun birdMove(){
+        if (touchControl){
+            touchControl=false
+            birdY-=birdHeight+birdHeight/5
         }else{
-            birdY+=birdYuksekligi/8
+            birdY+=birdHeight/8
         }
 
         if(birdY<=0.0f){
             birdY=0.0f
         }
-        if(birdY >= ekranYuksekligi-birdYuksekligi){
-            birdY =(ekranYuksekligi-birdYuksekligi).toFloat()
+        if(birdY >= screenHeight-birdHeight){
+            birdY =(screenHeight-birdHeight).toFloat()
         }
         viewBinding.imgfvBird.y=birdY
     }
 
-    fun birdUcmaAnimasyonu(){
-        val ucmaAnimasyonu = ObjectAnimator.ofFloat(viewBinding.imgfvBird,"rotation",-25.0f,0.0f).apply {
+    fun birdFlyAnimator(){
+        val flyAnimator = ObjectAnimator.ofFloat(viewBinding.imgfvBird,"rotation",-25.0f,0.0f).apply {
         }
-        ucmaAnimasyonu.start()
+        flyAnimator.start()
     }
 
-    fun baslangicYaziSilme(){
-        val alphAnimasyonu = ObjectAnimator.ofFloat(viewBinding.txtTips,"alpha",1.0f,0.0f).apply {
+    fun removeTips(){
+        val alphaAnimator = ObjectAnimator.ofFloat(viewBinding.txtTips,"alpha",1.0f,0.0f).apply {
             duration = 500
         }
-        alphAnimasyonu.start()
+        alphaAnimator.start()
     }
 
-    fun konumVeBoyutBilgileri(){
+    fun updateLocation(){
         birdX = viewBinding.imgfvBird.x
         birdY = viewBinding.imgfvBird.y
 
@@ -126,28 +126,28 @@ class GameActivity : BaseActivity<ActivityGameBinding>() {
         pipe2UstY = viewBinding.imgfvPipeTopS.y
 
 
-        ekranYuksekligi = viewBinding.cl.height
-        ekranGenisligi = viewBinding.cl.width
-        birdYuksekligi = viewBinding.imgfvBird.height
-        birdGenisligi = viewBinding.imgfvBird.width
+        screenHeight = viewBinding.cl.height
+        screenWidth = viewBinding.cl.width
+        birdHeight = viewBinding.imgfvBird.height
+        birdWidth = viewBinding.imgfvBird.width
 
-        pipeUstYukseklik = viewBinding.imgfvPipeTopL.height
-        pipeUstGenislik = viewBinding.imgfvPipeTopL.width
+        pipeTopHeight = viewBinding.imgfvPipeTopL.height
+        pipeTopWidth = viewBinding.imgfvPipeTopL.width
     }
 
-    fun pipeHareketi(){
+    fun pipeMove(){
 
         pipeUstX-=15.0f
         pipeAltX-=15.0f
 
-        if (pipeUstX < -pipeUstGenislik && pipeAltX < -pipeUstGenislik){
-            pipeUstX = (ekranGenisligi +pipeUstGenislik).toFloat()
-            pipeAltX = (ekranGenisligi +pipeUstGenislik).toFloat()
+        if (pipeUstX < -pipeTopWidth && pipeAltX < -pipeTopWidth){
+            pipeUstX = (screenWidth +pipeTopWidth).toFloat()
+            pipeAltX = (screenWidth +pipeTopWidth).toFloat()
 
-            val cikacakSayi = ekranYuksekligi - pipeUstYukseklik
+            val cikacakSayi = screenHeight - pipeTopHeight
 
-            pipeUstY = ((birdYuksekligi..ekranYuksekligi-cikacakSayi).random()-pipeUstYukseklik).toFloat()
-            pipeAltY = (pipeUstY+pipeUstYukseklik+(birdYuksekligi*3))
+            pipeUstY = ((birdHeight..screenHeight-cikacakSayi).random()-pipeTopHeight).toFloat()
+            pipeAltY = (pipeUstY+pipeTopHeight+(birdHeight*3))
         }
 
         viewBinding.imgfvPipeTopL.x = pipeUstX
@@ -160,14 +160,14 @@ class GameActivity : BaseActivity<ActivityGameBinding>() {
         pipe2UstX-=15.0f
         pipe2AltX-=15.0f
 
-        if(pipe2UstX < -pipeUstGenislik && pipe2AltX < -pipeUstGenislik){
-            pipe2UstX = (ekranGenisligi +pipeUstGenislik).toFloat()
-            pipe2AltX = (ekranGenisligi +pipeUstGenislik).toFloat()
+        if(pipe2UstX < -pipeTopWidth && pipe2AltX < -pipeTopWidth){
+            pipe2UstX = (screenWidth +pipeTopWidth).toFloat()
+            pipe2AltX = (screenWidth +pipeTopWidth).toFloat()
 
-            val cikacakSayi = ekranYuksekligi - pipeUstYukseklik
+            val cikacakSayi = screenHeight - pipeTopHeight
 
-            pipe2UstY = ((birdYuksekligi..ekranYuksekligi-cikacakSayi).random()-pipeUstYukseklik).toFloat()
-            pipe2AltY = (pipe2UstY+pipeUstYukseklik+(birdYuksekligi*3))
+            pipe2UstY = ((birdHeight..screenHeight-cikacakSayi).random()-pipeTopHeight).toFloat()
+            pipe2AltY = (pipe2UstY+pipeTopHeight+(birdHeight*3))
         }
 
         viewBinding.imgfvPipeTopS.x=pipe2UstX
@@ -177,70 +177,68 @@ class GameActivity : BaseActivity<ActivityGameBinding>() {
         viewBinding.imgfvPipeBottomS.y = pipe2AltY
     }
 
-    fun carpismaTesit(){
-        var bSagUx = viewBinding.imgfvBird.x+birdGenisligi
+    fun collide(){
+        var bSagUx = viewBinding.imgfvBird.x+birdWidth
         var bSagUy = viewBinding.imgfvBird.y
         var bSolUx = viewBinding.imgfvBird.x
         var bSolUy = viewBinding.imgfvBird.y
 
-        var bSagAx = viewBinding.imgfvBird.x+birdGenisligi
-        var bSagAy = viewBinding.imgfvBird.y + birdYuksekligi
+        var bSagAx = viewBinding.imgfvBird.x+birdWidth
+        var bSagAy = viewBinding.imgfvBird.y + birdHeight
         var bSolAx = viewBinding.imgfvBird.x
-        var bSolAy = viewBinding.imgfvBird.y + birdYuksekligi
+        var bSolAy = viewBinding.imgfvBird.y + birdHeight
 
-        var pipeOrtaNokta = viewBinding.imgfvPipeTopL.x + viewBinding.imgfvPipeTopL.width/2
-        var pipe2OrtaNokta = viewBinding.imgfvPipeTopS.x + viewBinding.imgfvPipeTopS.width/2
-        var birdOrtaNokta = viewBinding.imgfvBird.x + viewBinding.imgfvBird.width/2
+        var pipeMidpoint = viewBinding.imgfvPipeTopL.x + viewBinding.imgfvPipeTopL.width/2
+        var pipe2Midpoint = viewBinding.imgfvPipeTopS.x + viewBinding.imgfvPipeTopS.width/2
+        var birdMidpoint = viewBinding.imgfvBird.x + viewBinding.imgfvBird.width/2
 
 
 
-        if (bSagUy >= viewBinding.imgfvPipeTopL.y && bSagUy <= viewBinding.imgfvPipeTopL.y + pipeUstYukseklik &&
-            bSolUy >= viewBinding.imgfvPipeTopL.y && bSolUy <= viewBinding.imgfvPipeTopL.y + pipeUstYukseklik &&
-            bSagUx >= viewBinding.imgfvPipeTopL.x && bSagUx <= viewBinding.imgfvPipeTopL.x + pipeUstGenislik &&
-            bSolUx >= viewBinding.imgfvPipeTopL.x && bSolUx <= viewBinding.imgfvPipeTopL.x + pipeUstGenislik
+        if (bSagUy >= viewBinding.imgfvPipeTopL.y && bSagUy <= viewBinding.imgfvPipeTopL.y + pipeTopHeight &&
+            bSolUy >= viewBinding.imgfvPipeTopL.y && bSolUy <= viewBinding.imgfvPipeTopL.y + pipeTopHeight &&
+            bSagUx >= viewBinding.imgfvPipeTopL.x && bSagUx <= viewBinding.imgfvPipeTopL.x + pipeTopWidth &&
+            bSolUx >= viewBinding.imgfvPipeTopL.x && bSolUx <= viewBinding.imgfvPipeTopL.x + pipeTopWidth
             ||
-            bSagUy >= viewBinding.imgfvPipeTopS.y && bSagUy <= viewBinding.imgfvPipeTopS.y + pipeUstYukseklik &&
-            bSolUy >= viewBinding.imgfvPipeTopS.y && bSolUy <= viewBinding.imgfvPipeTopS.y + pipeUstYukseklik &&
-            bSagUx >= viewBinding.imgfvPipeTopS.x && bSagUx <= viewBinding.imgfvPipeTopS.x + pipeUstGenislik &&
-            bSolUx >= viewBinding.imgfvPipeTopS.x && bSolUx <= viewBinding.imgfvPipeTopS.x + pipeUstGenislik
+            bSagUy >= viewBinding.imgfvPipeTopS.y && bSagUy <= viewBinding.imgfvPipeTopS.y + pipeTopHeight &&
+            bSolUy >= viewBinding.imgfvPipeTopS.y && bSolUy <= viewBinding.imgfvPipeTopS.y + pipeTopHeight &&
+            bSagUx >= viewBinding.imgfvPipeTopS.x && bSagUx <= viewBinding.imgfvPipeTopS.x + pipeTopWidth &&
+            bSolUx >= viewBinding.imgfvPipeTopS.x && bSolUx <= viewBinding.imgfvPipeTopS.x + pipeTopWidth
             ||
-            bSagAy >= viewBinding.imgfvPipeBottomL.y && bSagAy <= viewBinding.imgfvPipeBottomL.y + pipeUstYukseklik &&
-            bSolAy >= viewBinding.imgfvPipeBottomL.y && bSolAy <= viewBinding.imgfvPipeBottomL.y + pipeUstYukseklik &&
-            bSagAx >= viewBinding.imgfvPipeBottomL.x && bSagAx <= viewBinding.imgfvPipeBottomL.x + pipeUstGenislik &&
-            bSolAx >= viewBinding.imgfvPipeBottomL.x && bSolAx <= viewBinding.imgfvPipeBottomL.x + pipeUstGenislik
+            bSagAy >= viewBinding.imgfvPipeBottomL.y && bSagAy <= viewBinding.imgfvPipeBottomL.y + pipeTopHeight &&
+            bSolAy >= viewBinding.imgfvPipeBottomL.y && bSolAy <= viewBinding.imgfvPipeBottomL.y + pipeTopHeight &&
+            bSagAx >= viewBinding.imgfvPipeBottomL.x && bSagAx <= viewBinding.imgfvPipeBottomL.x + pipeTopWidth &&
+            bSolAx >= viewBinding.imgfvPipeBottomL.x && bSolAx <= viewBinding.imgfvPipeBottomL.x + pipeTopWidth
             ||
-            bSagAy >= viewBinding.imgfvPipeBottomS.y && bSagAy <= viewBinding.imgfvPipeBottomS.y + pipeUstYukseklik &&
-            bSolAy >= viewBinding.imgfvPipeBottomS.y && bSolAy <= viewBinding.imgfvPipeBottomS.y + pipeUstYukseklik &&
-            bSagAx >= viewBinding.imgfvPipeBottomS.x && bSagAx <= viewBinding.imgfvPipeBottomS.x + pipeUstGenislik &&
-            bSolAx >= viewBinding.imgfvPipeBottomS.x && bSolAx <= viewBinding.imgfvPipeBottomS.x + pipeUstGenislik){
+            bSagAy >= viewBinding.imgfvPipeBottomS.y && bSagAy <= viewBinding.imgfvPipeBottomS.y + pipeTopHeight &&
+            bSolAy >= viewBinding.imgfvPipeBottomS.y && bSolAy <= viewBinding.imgfvPipeBottomS.y + pipeTopHeight &&
+            bSagAx >= viewBinding.imgfvPipeBottomS.x && bSagAx <= viewBinding.imgfvPipeBottomS.x + pipeTopWidth &&
+            bSolAx >= viewBinding.imgfvPipeBottomS.x && bSolAx <= viewBinding.imgfvPipeBottomS.x + pipeTopWidth){
 
             timer.cancel()
-            muzukcalar = MediaPlayer.create(this, R.raw.carpma)
-            muzukcalar.start()
+            mediaPlayer = MediaPlayer.create(this, R.raw.carpma)
+            mediaPlayer.start()
             val intent = Intent(this@GameActivity, ResultActivity::class.java)
-            intent.putExtra("skor",skor)
+            intent.putExtra("skor",score)
             startActivity(intent)
             finish()
         }
 
-        if (birdOrtaNokta >= pipeOrtaNokta && pipe1PuanKontrol){
-            muzukcalar = MediaPlayer.create(this, R.raw.puan)
-            muzukcalar.start()
-            skor+=1
-            viewBinding.txtScore.text = skor.toString()
-            pipe1PuanKontrol = false
-            pipe2PuanKontrol = true
+        if (birdMidpoint >= pipeMidpoint && pipe1PuanControl){
+            mediaPlayer = MediaPlayer.create(this, R.raw.puan)
+            mediaPlayer.start()
+            score+=1
+            viewBinding.txtScore.text = score.toString()
+            pipe1PuanControl = false
+            pipe2PuanControl = true
         }
-        if(birdOrtaNokta >= pipe2OrtaNokta && pipe2PuanKontrol){
-            muzukcalar = MediaPlayer.create(this, R.raw.puan)
-            muzukcalar.start()
-            skor+=1
-            viewBinding.txtScore.text = skor.toString()
-            pipe1PuanKontrol = true
-            pipe2PuanKontrol = false
+        if(birdMidpoint >= pipe2Midpoint && pipe2PuanControl){
+            mediaPlayer = MediaPlayer.create(this, R.raw.puan)
+            mediaPlayer.start()
+            score+=1
+            viewBinding.txtScore.text = score.toString()
+            pipe1PuanControl = true
+            pipe2PuanControl = false
         }
-
-
 
     }
 
