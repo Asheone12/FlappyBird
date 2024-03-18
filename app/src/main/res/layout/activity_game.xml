@@ -20,7 +20,7 @@
         app:layout_constraintVertical_bias="0.328" />
 
     <androidx.constraintlayout.utils.widget.ImageFilterView
-        android:id="@+id/pipe_bottom_large"
+        android:id="@+id/pipe_bottom1"
         android:layout_width="120dp"
         android:layout_height="450dp"
         android:layout_marginEnd="-360dp"
@@ -30,18 +30,18 @@
         app:srcCompat="@drawable/pipe" />
 
     <androidx.constraintlayout.utils.widget.ImageFilterView
-        android:id="@+id/pipe_top_large"
+        android:id="@+id/pipe_top1"
         android:layout_width="120dp"
         android:layout_height="450dp"
         android:layout_marginEnd="-360dp"
         android:layout_marginBottom="180dp"
         android:rotation="180"
-        app:layout_constraintBottom_toTopOf="@+id/pipe_bottom_large"
+        app:layout_constraintBottom_toTopOf="@+id/pipe_bottom1"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/pipe" />
 
     <androidx.constraintlayout.utils.widget.ImageFilterView
-        android:id="@+id/pipe_bottom_small"
+        android:id="@+id/pipe_bottom2"
         android:layout_width="120dp"
         android:layout_height="450dp"
         android:layout_marginEnd="-700dp"
@@ -51,13 +51,13 @@
         app:srcCompat="@drawable/pipe" />
 
     <androidx.constraintlayout.utils.widget.ImageFilterView
-        android:id="@+id/pipe_top_small"
+        android:id="@+id/pipe_top2"
         android:layout_width="120dp"
         android:layout_height="450dp"
         android:layout_marginEnd="-700dp"
         android:layout_marginBottom="180dp"
         android:rotation="180"
-        app:layout_constraintBottom_toTopOf="@+id/pipe_bottom_small"
+        app:layout_constraintBottom_toTopOf="@+id/pipe_bottom2"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/pipe" />
 

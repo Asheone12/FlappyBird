@@ -17,20 +17,20 @@ class GameActivity : BaseActivity<ActivityGameBinding>() {
     //位置
     private var birdX= 0.0f
     private var birdY= 0.0f
-    private var pipeTopLargeX = 0.0f
-    private var pipeTopLargeY = 0.0f
-    private var pipeBottomLargeX = 0.0f
-    private var pipeBottomLargeY = 0.0f
-    private var pipeTopSmallX = 0.0f
-    private var pipeTopSmallY = 0.0f
-    private var pipeBottomSmallX = 0.0f
-    private var pipeBottomSmallY = 0.0f
+    private var pipeTop1X = 0.0f
+    private var pipeTop1Y = 0.0f
+    private var pipeBottom1X = 0.0f
+    private var pipeBottom1Y = 0.0f
+    private var pipeTop2X = 0.0f
+    private var pipeTop2Y = 0.0f
+    private var pipeBottom2X = 0.0f
+    private var pipeBottom2Y = 0.0f
 
     //控制器
     private var touchControl = false
     private var startControl = false
-    var pipe1PuanControl = true
-    var pipe2PuanControl = true
+    private var pipe1PassControl = true
+    private var pipe2PassControl = true
 
     //屏幕参数
     private var screenWidth = 0
@@ -112,14 +112,14 @@ class GameActivity : BaseActivity<ActivityGameBinding>() {
         birdX = viewBinding.bird.x
         birdY = viewBinding.bird.y
 
-        pipeTopLargeX = viewBinding.pipeTopLarge.x
-        pipeTopLargeY = viewBinding.pipeTopLarge.y
-        pipeBottomLargeX = viewBinding.pipeBottomLarge.x
-        pipeBottomLargeY = viewBinding.pipeBottomLarge.y
-        pipeBottomSmallX = viewBinding.pipeBottomSmall.x
-        pipeBottomSmallY = viewBinding.pipeBottomSmall.y
-        pipeTopSmallX = viewBinding.pipeTopSmall.x
-        pipeTopSmallY = viewBinding.pipeTopSmall.y
+        pipeTop1X = viewBinding.pipeTop1.x
+        pipeTop1Y = viewBinding.pipeTop1.y
+        pipeBottom1X = viewBinding.pipeBottom1.x
+        pipeBottom1Y = viewBinding.pipeBottom1.y
+        pipeBottom2X = viewBinding.pipeBottom2.x
+        pipeBottom2Y = viewBinding.pipeBottom2.y
+        pipeTop2X = viewBinding.pipeTop2.x
+        pipeTop2Y = viewBinding.pipeTop2.y
 
 
         screenHeight = viewBinding.view.height
@@ -127,50 +127,50 @@ class GameActivity : BaseActivity<ActivityGameBinding>() {
         birdHeight = viewBinding.bird.height
         birdWidth = viewBinding.bird.width
 
-        pipeTopHeight = viewBinding.pipeTopLarge.height
-        pipeTopWidth = viewBinding.pipeTopLarge.width
+        pipeTopHeight = viewBinding.pipeTop1.height
+        pipeTopWidth = viewBinding.pipeTop1.width
     }
 
     private fun pipeMove(){
 
-        pipeTopLargeX-=15.0f
-        pipeBottomLargeX-=15.0f
+        pipeTop1X-=15.0f
+        pipeBottom1X-=15.0f
 
-        if (pipeTopLargeX < -pipeTopWidth && pipeBottomLargeX < -pipeTopWidth){
-            pipeTopLargeX = (screenWidth +pipeTopWidth).toFloat()
-            pipeBottomLargeX = (screenWidth +pipeTopWidth).toFloat()
+        if (pipeTop1X < -pipeTopWidth && pipeBottom1X < -pipeTopWidth){
+            pipeTop1X = (screenWidth +pipeTopWidth).toFloat()
+            pipeBottom1X = (screenWidth +pipeTopWidth).toFloat()
 
-            val cikacakSayi = screenHeight - pipeTopHeight
+            val leastHeight = screenHeight - pipeTopHeight
 
-            pipeTopLargeY = ((birdHeight..screenHeight-cikacakSayi).random()-pipeTopHeight).toFloat()
-            pipeBottomLargeY = (pipeTopLargeY+pipeTopHeight+(birdHeight*3))
+            pipeTop1Y = ((birdHeight..screenHeight-leastHeight).random()-pipeTopHeight).toFloat()
+            pipeBottom1Y = (pipeTop1Y+pipeTopHeight+(birdHeight*3))
         }
 
-        viewBinding.pipeTopLarge.x = pipeTopLargeX
-        viewBinding.pipeBottomLarge.x = pipeBottomLargeX
+        viewBinding.pipeTop1.x = pipeTop1X
+        viewBinding.pipeBottom1.x = pipeBottom1X
 
-        viewBinding.pipeTopLarge.y = pipeTopLargeY
-        viewBinding.pipeBottomLarge.y = pipeBottomLargeY
+        viewBinding.pipeTop1.y = pipeTop1Y
+        viewBinding.pipeBottom1.y = pipeBottom1Y
 
 
-        pipeTopSmallX-=15.0f
-        pipeBottomSmallX-=15.0f
+        pipeTop2X-=15.0f
+        pipeBottom2X-=15.0f
 
-        if(pipeTopSmallX < -pipeTopWidth && pipeBottomSmallX < -pipeTopWidth){
-            pipeTopSmallX = (screenWidth +pipeTopWidth).toFloat()
-            pipeBottomSmallX = (screenWidth +pipeTopWidth).toFloat()
+        if(pipeTop2X < -pipeTopWidth && pipeBottom2X < -pipeTopWidth){
+            pipeTop2X = (screenWidth +pipeTopWidth).toFloat()
+            pipeBottom2X = (screenWidth +pipeTopWidth).toFloat()
 
-            val cikacakSayi = screenHeight - pipeTopHeight
+            val leastHeight = screenHeight - pipeTopHeight
 
-            pipeTopSmallY = ((birdHeight..screenHeight-cikacakSayi).random()-pipeTopHeight).toFloat()
-            pipeBottomSmallY = (pipeTopSmallY+pipeTopHeight+(birdHeight*3))
+            pipeTop2Y = ((birdHeight..screenHeight-leastHeight).random()-pipeTopHeight).toFloat()
+            pipeBottom2Y = (pipeTop2Y+pipeTopHeight+(birdHeight*3))
         }
 
-        viewBinding.pipeTopSmall.x=pipeTopSmallX
-        viewBinding.pipeBottomSmall.x=pipeBottomSmallX
+        viewBinding.pipeTop2.x=pipeTop2X
+        viewBinding.pipeBottom2.x=pipeBottom2X
 
-        viewBinding.pipeTopSmall.y = pipeTopSmallY
-        viewBinding.pipeBottomSmall.y = pipeBottomSmallY
+        viewBinding.pipeTop2.y = pipeTop2Y
+        viewBinding.pipeBottom2.y = pipeBottom2Y
     }
 
     private fun collide(){
@@ -184,31 +184,31 @@ class GameActivity : BaseActivity<ActivityGameBinding>() {
         var bSolAx = viewBinding.bird.x
         var bSolAy = viewBinding.bird.y + birdHeight
 
-        var pipeMidpoint = viewBinding.pipeTopLarge.x + viewBinding.pipeTopLarge.width/2
-        var pipe2Midpoint = viewBinding.pipeTopSmall.x + viewBinding.pipeTopSmall.width/2
+        var pipe1Midpoint = viewBinding.pipeTop1.x + viewBinding.pipeTop1.width/2
+        var pipe2Midpoint = viewBinding.pipeTop2.x + viewBinding.pipeTop2.width/2
         var birdMidpoint = viewBinding.bird.x + viewBinding.bird.width/2
 
 
 
-        if (bSagUy >= viewBinding.pipeTopLarge.y && bSagUy <= viewBinding.pipeTopLarge.y + pipeTopHeight &&
-            bSolUy >= viewBinding.pipeTopLarge.y && bSolUy <= viewBinding.pipeTopLarge.y + pipeTopHeight &&
-            bSagUx >= viewBinding.pipeTopLarge.x && bSagUx <= viewBinding.pipeTopLarge.x + pipeTopWidth &&
-            bSolUx >= viewBinding.pipeTopLarge.x && bSolUx <= viewBinding.pipeTopLarge.x + pipeTopWidth
+        if (bSagUy >= viewBinding.pipeTop1.y && bSagUy <= viewBinding.pipeTop1.y + pipeTopHeight &&
+            bSolUy >= viewBinding.pipeTop1.y && bSolUy <= viewBinding.pipeTop1.y + pipeTopHeight &&
+            bSagUx >= viewBinding.pipeTop1.x && bSagUx <= viewBinding.pipeTop1.x + pipeTopWidth &&
+            bSolUx >= viewBinding.pipeTop1.x && bSolUx <= viewBinding.pipeTop1.x + pipeTopWidth
             ||
-            bSagUy >= viewBinding.pipeTopSmall.y && bSagUy <= viewBinding.pipeTopSmall.y + pipeTopHeight &&
-            bSolUy >= viewBinding.pipeTopSmall.y && bSolUy <= viewBinding.pipeTopSmall.y + pipeTopHeight &&
-            bSagUx >= viewBinding.pipeTopSmall.x && bSagUx <= viewBinding.pipeTopSmall.x + pipeTopWidth &&
-            bSolUx >= viewBinding.pipeTopSmall.x && bSolUx <= viewBinding.pipeTopSmall.x + pipeTopWidth
+            bSagUy >= viewBinding.pipeTop2.y && bSagUy <= viewBinding.pipeTop2.y + pipeTopHeight &&
+            bSolUy >= viewBinding.pipeTop2.y && bSolUy <= viewBinding.pipeTop2.y + pipeTopHeight &&
+            bSagUx >= viewBinding.pipeTop2.x && bSagUx <= viewBinding.pipeTop2.x + pipeTopWidth &&
+            bSolUx >= viewBinding.pipeTop2.x && bSolUx <= viewBinding.pipeTop2.x + pipeTopWidth
             ||
-            bSagAy >= viewBinding.pipeBottomLarge.y && bSagAy <= viewBinding.pipeBottomLarge.y + pipeTopHeight &&
-            bSolAy >= viewBinding.pipeBottomLarge.y && bSolAy <= viewBinding.pipeBottomLarge.y + pipeTopHeight &&
-            bSagAx >= viewBinding.pipeBottomLarge.x && bSagAx <= viewBinding.pipeBottomLarge.x + pipeTopWidth &&
-            bSolAx >= viewBinding.pipeBottomLarge.x && bSolAx <= viewBinding.pipeBottomLarge.x + pipeTopWidth
+            bSagAy >= viewBinding.pipeBottom1.y && bSagAy <= viewBinding.pipeBottom1.y + pipeTopHeight &&
+            bSolAy >= viewBinding.pipeBottom1.y && bSolAy <= viewBinding.pipeBottom1.y + pipeTopHeight &&
+            bSagAx >= viewBinding.pipeBottom1.x && bSagAx <= viewBinding.pipeBottom1.x + pipeTopWidth &&
+            bSolAx >= viewBinding.pipeBottom1.x && bSolAx <= viewBinding.pipeBottom1.x + pipeTopWidth
             ||
-            bSagAy >= viewBinding.pipeBottomSmall.y && bSagAy <= viewBinding.pipeBottomSmall.y + pipeTopHeight &&
-            bSolAy >= viewBinding.pipeBottomSmall.y && bSolAy <= viewBinding.pipeBottomSmall.y + pipeTopHeight &&
-            bSagAx >= viewBinding.pipeBottomSmall.x && bSagAx <= viewBinding.pipeBottomSmall.x + pipeTopWidth &&
-            bSolAx >= viewBinding.pipeBottomSmall.x && bSolAx <= viewBinding.pipeBottomSmall.x + pipeTopWidth){
+            bSagAy >= viewBinding.pipeBottom2.y && bSagAy <= viewBinding.pipeBottom2.y + pipeTopHeight &&
+            bSolAy >= viewBinding.pipeBottom2.y && bSolAy <= viewBinding.pipeBottom2.y + pipeTopHeight &&
+            bSagAx >= viewBinding.pipeBottom2.x && bSagAx <= viewBinding.pipeBottom2.x + pipeTopWidth &&
+            bSolAx >= viewBinding.pipeBottom2.x && bSolAx <= viewBinding.pipeBottom2.x + pipeTopWidth){
 
             timer.cancel()
             mediaPlayer = MediaPlayer.create(this, R.raw.carpma)
@@ -219,21 +219,21 @@ class GameActivity : BaseActivity<ActivityGameBinding>() {
             finish()
         }
 
-        if (birdMidpoint >= pipeMidpoint && pipe1PuanControl){
+        if (birdMidpoint >= pipe1Midpoint && pipe1PassControl){
             mediaPlayer = MediaPlayer.create(this, R.raw.puan)
             mediaPlayer.start()
             score+=1
             viewBinding.txtScore.text = score.toString()
-            pipe1PuanControl = false
-            pipe2PuanControl = true
+            pipe1PassControl = false
+            pipe2PassControl = true
         }
-        if(birdMidpoint >= pipe2Midpoint && pipe2PuanControl){
+        if(birdMidpoint >= pipe2Midpoint && pipe2PassControl){
             mediaPlayer = MediaPlayer.create(this, R.raw.puan)
             mediaPlayer.start()
             score+=1
             viewBinding.txtScore.text = score.toString()
-            pipe1PuanControl = true
-            pipe2PuanControl = false
+            pipe1PassControl = true
+            pipe2PassControl = false
         }
 
     }
