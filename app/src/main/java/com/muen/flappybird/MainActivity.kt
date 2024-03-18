@@ -28,7 +28,7 @@ class MainActivity : AppCompatActivity() {
     fun skorYaz(){
         val sp = getSharedPreferences("sonuc", MODE_PRIVATE)
         val enYuksekSkor = sp.getInt("EnyuksekSkor",0)
-        ulas.textViewEnYuksekSkorMain.text = enYuksekSkor.toString()
+        ulas.score.text = enYuksekSkor.toString()
     }
 
     override fun onBackPressed() {

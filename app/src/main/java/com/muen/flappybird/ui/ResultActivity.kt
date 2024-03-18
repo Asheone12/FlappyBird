@@ -15,12 +15,12 @@ class ResultActivity : AppCompatActivity() {
 
         skorYaz()
 
-        ulas.buttonYenidenBasla.setOnClickListener {
+        ulas.btnRestart.setOnClickListener {
             startActivity(Intent(this, GameActivity::class.java))
             finish()
         }
 
-        ulas.buttonAnaMenuDon.setOnClickListener {
+        ulas.btnReturn.setOnClickListener {
             startActivity(Intent(this, MainActivity::class.java))
             finish()
         }
@@ -32,16 +32,16 @@ class ResultActivity : AppCompatActivity() {
         val enYuksekSkor = sp.getInt("EnyuksekSkor",0)
 
         val gelenSkor = intent.getIntExtra("skor",0)
-        ulas.textViewSonucSkor.text = gelenSkor.toString()
+        ulas.score.text = gelenSkor.toString()
 
         if (gelenSkor > enYuksekSkor){
             val editor = sp.edit()
             editor.putInt("EnyuksekSkor",gelenSkor)
             editor.commit()
-            ulas.textViewSonucEnYuksekSkor.text = gelenSkor.toString()
+            ulas.bestScore.text = gelenSkor.toString()
         }
         else{
-            ulas.textViewSonucEnYuksekSkor.text = enYuksekSkor.toString()
+            ulas.bestScore.text = enYuksekSkor.toString()
         }
 
     }

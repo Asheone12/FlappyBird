@@ -100,11 +100,11 @@ class GameActivity : AppCompatActivity() {
         if(birdY >= ekranYuksekligi-birdYuksekligi){
             birdY =(ekranYuksekligi-birdYuksekligi).toFloat()
         }
-        ulas.imageFViewBird.y=birdY
+        ulas.imgfvBird.y=birdY
     }
 
     fun birdUcmaAnimasyonu(){
-        val ucmaAnimasyonu = ObjectAnimator.ofFloat(ulas.imageFViewBird,"rotation",-25.0f,0.0f).apply {
+        val ucmaAnimasyonu = ObjectAnimator.ofFloat(ulas.imgfvBird,"rotation",-25.0f,0.0f).apply {
         }
         ucmaAnimasyonu.start()
     }
@@ -117,26 +117,26 @@ class GameActivity : AppCompatActivity() {
     }
 
     fun konumVeBoyutBilgileri(){
-        birdX = ulas.imageFViewBird.x
-        birdY = ulas.imageFViewBird.y
+        birdX = ulas.imgfvBird.x
+        birdY = ulas.imgfvBird.y
 
-        pipeUstX = ulas.imageFViewPust.x
-        pipeUstY = ulas.imageFViewPust.y
-        pipeAltX = ulas.imageFViewPalt.x
-        pipeAltY = ulas.imageFViewPalt.y
-        pipe2AltX = ulas.imageFViewPalt2.x
-        pipe2AltY = ulas.imageFViewPalt2.y
-        pipe2UstX = ulas.imageFViewPust2.x
-        pipe2UstY = ulas.imageFViewPust2.y
+        pipeUstX = ulas.imgfvPipeTopL.x
+        pipeUstY = ulas.imgfvPipeTopL.y
+        pipeAltX = ulas.imgfvPipeBottomL.x
+        pipeAltY = ulas.imgfvPipeBottomL.y
+        pipe2AltX = ulas.imgfvPipeBottomS.x
+        pipe2AltY = ulas.imgfvPipeBottomS.y
+        pipe2UstX = ulas.imgfvPipeTopS.x
+        pipe2UstY = ulas.imgfvPipeTopS.y
 
 
         ekranYuksekligi = ulas.cl.height
         ekranGenisligi = ulas.cl.width
-        birdYuksekligi = ulas.imageFViewBird.height
-        birdGenisligi = ulas.imageFViewBird.width
+        birdYuksekligi = ulas.imgfvBird.height
+        birdGenisligi = ulas.imgfvBird.width
 
-        pipeUstYukseklik = ulas.imageFViewPust.height
-        pipeUstGenislik = ulas.imageFViewPust.width
+        pipeUstYukseklik = ulas.imgfvPipeTopL.height
+        pipeUstGenislik = ulas.imgfvPipeTopL.width
     }
 
     fun pipeHareketi(){
@@ -154,11 +154,11 @@ class GameActivity : AppCompatActivity() {
             pipeAltY = (pipeUstY+pipeUstYukseklik+(birdYuksekligi*3))
         }
 
-        ulas.imageFViewPust.x = pipeUstX
-        ulas.imageFViewPalt.x = pipeAltX
+        ulas.imgfvPipeTopL.x = pipeUstX
+        ulas.imgfvPipeBottomL.x = pipeAltX
 
-        ulas.imageFViewPust.y = pipeUstY
-        ulas.imageFViewPalt.y = pipeAltY
+        ulas.imgfvPipeTopL.y = pipeUstY
+        ulas.imgfvPipeBottomL.y = pipeAltY
 
 
         pipe2UstX-=15.0f
@@ -174,49 +174,49 @@ class GameActivity : AppCompatActivity() {
             pipe2AltY = (pipe2UstY+pipeUstYukseklik+(birdYuksekligi*3))
         }
 
-        ulas.imageFViewPust2.x=pipe2UstX
-        ulas.imageFViewPalt2.x=pipe2AltX
+        ulas.imgfvPipeTopS.x=pipe2UstX
+        ulas.imgfvPipeBottomS.x=pipe2AltX
 
-        ulas.imageFViewPust2.y = pipe2UstY
-        ulas.imageFViewPalt2.y = pipe2AltY
+        ulas.imgfvPipeTopS.y = pipe2UstY
+        ulas.imgfvPipeBottomS.y = pipe2AltY
     }
 
     fun carpismaTesit(){
-        var bSagUx = ulas.imageFViewBird.x+birdGenisligi
-        var bSagUy = ulas.imageFViewBird.y
-        var bSolUx = ulas.imageFViewBird.x
-        var bSolUy = ulas.imageFViewBird.y
+        var bSagUx = ulas.imgfvBird.x+birdGenisligi
+        var bSagUy = ulas.imgfvBird.y
+        var bSolUx = ulas.imgfvBird.x
+        var bSolUy = ulas.imgfvBird.y
 
-        var bSagAx = ulas.imageFViewBird.x+birdGenisligi
-        var bSagAy = ulas.imageFViewBird.y + birdYuksekligi
-        var bSolAx = ulas.imageFViewBird.x
-        var bSolAy = ulas.imageFViewBird.y + birdYuksekligi
+        var bSagAx = ulas.imgfvBird.x+birdGenisligi
+        var bSagAy = ulas.imgfvBird.y + birdYuksekligi
+        var bSolAx = ulas.imgfvBird.x
+        var bSolAy = ulas.imgfvBird.y + birdYuksekligi
 
-        var pipeOrtaNokta = ulas.imageFViewPust.x + ulas.imageFViewPust.width/2
-        var pipe2OrtaNokta = ulas.imageFViewPust2.x + ulas.imageFViewPust2.width/2
-        var birdOrtaNokta = ulas.imageFViewBird.x + ulas.imageFViewBird.width/2
+        var pipeOrtaNokta = ulas.imgfvPipeTopL.x + ulas.imgfvPipeTopL.width/2
+        var pipe2OrtaNokta = ulas.imgfvPipeTopS.x + ulas.imgfvPipeTopS.width/2
+        var birdOrtaNokta = ulas.imgfvBird.x + ulas.imgfvBird.width/2
 
 
 
-        if (bSagUy >= ulas.imageFViewPust.y && bSagUy <= ulas.imageFViewPust.y + pipeUstYukseklik &&
-            bSolUy >= ulas.imageFViewPust.y && bSolUy <= ulas.imageFViewPust.y + pipeUstYukseklik &&
-            bSagUx >= ulas.imageFViewPust.x && bSagUx <= ulas.imageFViewPust.x + pipeUstGenislik &&
-            bSolUx >= ulas.imageFViewPust.x && bSolUx <= ulas.imageFViewPust.x + pipeUstGenislik
+        if (bSagUy >= ulas.imgfvPipeTopL.y && bSagUy <= ulas.imgfvPipeTopL.y + pipeUstYukseklik &&
+            bSolUy >= ulas.imgfvPipeTopL.y && bSolUy <= ulas.imgfvPipeTopL.y + pipeUstYukseklik &&
+            bSagUx >= ulas.imgfvPipeTopL.x && bSagUx <= ulas.imgfvPipeTopL.x + pipeUstGenislik &&
+            bSolUx >= ulas.imgfvPipeTopL.x && bSolUx <= ulas.imgfvPipeTopL.x + pipeUstGenislik
             ||
-            bSagUy >= ulas.imageFViewPust2.y && bSagUy <= ulas.imageFViewPust2.y + pipeUstYukseklik &&
-            bSolUy >= ulas.imageFViewPust2.y && bSolUy <= ulas.imageFViewPust2.y + pipeUstYukseklik &&
-            bSagUx >= ulas.imageFViewPust2.x && bSagUx <= ulas.imageFViewPust2.x + pipeUstGenislik &&
-            bSolUx >= ulas.imageFViewPust2.x && bSolUx <= ulas.imageFViewPust2.x + pipeUstGenislik
+            bSagUy >= ulas.imgfvPipeTopS.y && bSagUy <= ulas.imgfvPipeTopS.y + pipeUstYukseklik &&
+            bSolUy >= ulas.imgfvPipeTopS.y && bSolUy <= ulas.imgfvPipeTopS.y + pipeUstYukseklik &&
+            bSagUx >= ulas.imgfvPipeTopS.x && bSagUx <= ulas.imgfvPipeTopS.x + pipeUstGenislik &&
+            bSolUx >= ulas.imgfvPipeTopS.x && bSolUx <= ulas.imgfvPipeTopS.x + pipeUstGenislik
             ||
-            bSagAy >= ulas.imageFViewPalt.y && bSagAy <= ulas.imageFViewPalt.y + pipeUstYukseklik &&
-            bSolAy >= ulas.imageFViewPalt.y && bSolAy <= ulas.imageFViewPalt.y + pipeUstYukseklik &&
-            bSagAx >= ulas.imageFViewPalt.x && bSagAx <= ulas.imageFViewPalt.x + pipeUstGenislik &&
-            bSolAx >= ulas.imageFViewPalt.x && bSolAx <= ulas.imageFViewPalt.x + pipeUstGenislik
+            bSagAy >= ulas.imgfvPipeBottomL.y && bSagAy <= ulas.imgfvPipeBottomL.y + pipeUstYukseklik &&
+            bSolAy >= ulas.imgfvPipeBottomL.y && bSolAy <= ulas.imgfvPipeBottomL.y + pipeUstYukseklik &&
+            bSagAx >= ulas.imgfvPipeBottomL.x && bSagAx <= ulas.imgfvPipeBottomL.x + pipeUstGenislik &&
+            bSolAx >= ulas.imgfvPipeBottomL.x && bSolAx <= ulas.imgfvPipeBottomL.x + pipeUstGenislik
             ||
-            bSagAy >= ulas.imageFViewPalt2.y && bSagAy <= ulas.imageFViewPalt2.y + pipeUstYukseklik &&
-            bSolAy >= ulas.imageFViewPalt2.y && bSolAy <= ulas.imageFViewPalt2.y + pipeUstYukseklik &&
-            bSagAx >= ulas.imageFViewPalt2.x && bSagAx <= ulas.imageFViewPalt2.x + pipeUstGenislik &&
-            bSolAx >= ulas.imageFViewPalt2.x && bSolAx <= ulas.imageFViewPalt2.x + pipeUstGenislik){
+            bSagAy >= ulas.imgfvPipeBottomS.y && bSagAy <= ulas.imgfvPipeBottomS.y + pipeUstYukseklik &&
+            bSolAy >= ulas.imgfvPipeBottomS.y && bSolAy <= ulas.imgfvPipeBottomS.y + pipeUstYukseklik &&
+            bSagAx >= ulas.imgfvPipeBottomS.x && bSagAx <= ulas.imgfvPipeBottomS.x + pipeUstGenislik &&
+            bSolAx >= ulas.imgfvPipeBottomS.x && bSolAx <= ulas.imgfvPipeBottomS.x + pipeUstGenislik){
 
             timer.cancel()
             muzukcalar = MediaPlayer.create(this, R.raw.carpma)
