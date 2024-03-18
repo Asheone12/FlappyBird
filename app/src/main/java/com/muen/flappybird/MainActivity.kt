@@ -2,33 +2,34 @@ package com.muen.flappybird
 
 import android.content.Intent
 import android.media.MediaPlayer
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
 import com.muen.flappybird.databinding.ActivityMainBinding
 import com.muen.flappybird.ui.GameActivity
+import com.muen.flappybird.util.BaseActivity
 
-class MainActivity : AppCompatActivity() {
-    private lateinit var ulas : ActivityMainBinding
-
+class MainActivity : BaseActivity<ActivityMainBinding>() {
     private var muzukcalar = MediaPlayer()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        ulas = ActivityMainBinding.inflate(layoutInflater)
-        super.onCreate(savedInstanceState)
-        setContentView(ulas.root)
-
-        skorYaz()
-
-        ulas.buttonBasla.setOnClickListener {
-            startActivity(Intent(this@MainActivity, GameActivity::class.java))
-        }
-
+    override fun onCreateViewBinding(): ActivityMainBinding {
+        return ActivityMainBinding.inflate(layoutInflater)
     }
 
-    fun skorYaz(){
+    override fun initView() {
+        super.initView()
+        getBestScore()
+    }
+
+    override fun initListener() {
+        super.initListener()
+        viewBinding.buttonBasla.setOnClickListener {
+            startActivity(Intent(this@MainActivity, GameActivity::class.java))
+        }
+    }
+
+
+    private fun getBestScore(){
         val sp = getSharedPreferences("sonuc", MODE_PRIVATE)
         val enYuksekSkor = sp.getInt("EnyuksekSkor",0)
-        ulas.score.text = enYuksekSkor.toString()
+        viewBinding.score.text = enYuksekSkor.toString()
     }
 
     override fun onBackPressed() {

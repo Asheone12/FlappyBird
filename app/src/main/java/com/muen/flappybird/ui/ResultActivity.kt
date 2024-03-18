@@ -1,47 +1,50 @@
 package com.muen.flappybird.ui
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
 import com.muen.flappybird.MainActivity
 import com.muen.flappybird.databinding.ActivityResultBinding
+import com.muen.flappybird.util.BaseActivity
 
-class ResultActivity : AppCompatActivity() {
-    private lateinit var ulas : ActivityResultBinding
-    override fun onCreate(savedInstanceState: Bundle?) {
-        ulas = ActivityResultBinding.inflate(layoutInflater)
-        super.onCreate(savedInstanceState)
-        setContentView(ulas.root)
+class ResultActivity : BaseActivity<ActivityResultBinding>() {
+    override fun onCreateViewBinding(): ActivityResultBinding {
+        return ActivityResultBinding.inflate(layoutInflater)
+    }
 
-        skorYaz()
+    override fun initView() {
+        super.initView()
+        getScore()
+    }
 
-        ulas.btnRestart.setOnClickListener {
+    override fun initListener() {
+        super.initListener()
+        viewBinding.btnRestart.setOnClickListener {
             startActivity(Intent(this, GameActivity::class.java))
             finish()
         }
 
-        ulas.btnReturn.setOnClickListener {
+        viewBinding.btnReturn.setOnClickListener {
             startActivity(Intent(this, MainActivity::class.java))
             finish()
         }
-
     }
 
-    fun skorYaz(){
+
+
+    private fun getScore(){
         val sp = getSharedPreferences("sonuc", MODE_PRIVATE)
         val enYuksekSkor = sp.getInt("EnyuksekSkor",0)
 
         val gelenSkor = intent.getIntExtra("skor",0)
-        ulas.score.text = gelenSkor.toString()
+        viewBinding.score.text = gelenSkor.toString()
 
         if (gelenSkor > enYuksekSkor){
             val editor = sp.edit()
             editor.putInt("EnyuksekSkor",gelenSkor)
             editor.commit()
-            ulas.bestScore.text = gelenSkor.toString()
+            viewBinding.bestScore.text = gelenSkor.toString()
         }
         else{
-            ulas.bestScore.text = enYuksekSkor.toString()
+            viewBinding.bestScore.text = enYuksekSkor.toString()
         }
 
     }
