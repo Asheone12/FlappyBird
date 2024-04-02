@@ -19,7 +19,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
     override fun initListener() {
         super.initListener()
-        viewBinding.buttonBasla.setOnClickListener {
+        viewBinding.btnStart.setOnClickListener {
             startActivity(Intent(this@MainActivity, GameActivity::class.java))
         }
     }
