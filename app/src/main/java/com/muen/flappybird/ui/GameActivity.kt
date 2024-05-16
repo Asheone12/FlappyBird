@@ -81,9 +81,9 @@ class GameActivity : BaseActivity<ActivityGameBinding>() {
     private fun birdMove(){
         if (touchControl){
             touchControl=false
-            birdY-=birdHeight+birdHeight/5
+            birdY-=birdHeight+birdHeight/14
         }else{
-            birdY+=birdHeight/8
+            birdY+=birdHeight/10
         }
 
         if(birdY<=0.0f){

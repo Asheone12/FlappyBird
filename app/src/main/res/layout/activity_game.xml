@@ -24,7 +24,7 @@
         android:layout_width="120dp"
         android:layout_height="225dp"
         android:layout_marginEnd="-360dp"
-        android:layout_marginBottom="-40dp"
+        android:layout_marginBottom="-80dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/pipe" />
@@ -45,7 +45,7 @@
         android:layout_width="120dp"
         android:layout_height="225dp"
         android:layout_marginEnd="-700dp"
-        android:layout_marginBottom="-40dp"
+        android:layout_marginBottom="-80dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/pipe" />
@@ -66,9 +66,10 @@
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_marginStart="72dp"
-        android:layout_marginTop="228dp"
+        app:layout_constraintVertical_bias="0.35"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:srcCompat="@drawable/bird_small" />
 
     <TextView
